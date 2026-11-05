@@ -1,0 +1,16 @@
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# 临时与调试文件
+_t.html
+_preview.html
+*.log
+node_modules/
+
+# 本地截图
+*.png
+!assets/**/*.png

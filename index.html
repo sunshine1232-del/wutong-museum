@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>乌铜走银 · 一件器物的完整生命史</title>
+<meta name="description" content="乌铜走银虚拟展览：以 70℃ 熔点窗口为技术戏剧核心，三厅动线串联文物、工坊与纹样谱系。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ 3D 画布 ============ -->
+<canvas id="gl"></canvas>
+<div id="vignette"></div>
+
+<!-- ============ 顶栏 ============ -->
+<header class="topbar">
+  <a class="brand" href="#cover" data-hall="0">
+    <span class="brand-mark"><i></i><i></i></span>
+    <span class="brand-txt">
+      <b>乌铜走银</b>
+      <em>WUTONG ZOUYIN</em>
+    </span>
+  </a>
+</header>
+
+<!-- ============ 右上 · 专栏导航 ============ -->
+<nav class="column" id="column" aria-label="展厅专栏">
+  <div class="col-head"><span>专栏</span><em>COLUMNS</em></div>
+  <a class="col-item on" href="#cover" data-hall="0">
+    <b>序</b><span>熔点窗口</span><i>00</i>
+  </a>
+  <a class="col-item" href="#hall1" data-hall="1">
+    <b>壹</b><span>文物厅</span><i>01</i>
+  </a>
+  <a class="col-item" href="#hall2" data-hall="2">
+    <b>贰</b><span>工坊厅</span><i>02</i>
+  </a>
+  <a class="col-item" href="#hall3" data-hall="3">
+    <b>叁</b><span>传承厅</span><i>03</i>
+  </a>
+  <a class="col-item" href="#notes" data-hall="4">
+    <b>注</b><span>策展说明</span><i>04</i>
+  </a>
+  <p class="col-foot"><b>← →</b> 切换展厅</p>
+</nav>
+
+<main>
+
+<!-- ============ 序 · 封面 ============ -->
+<section id="cover" class="hall on" data-index="0">
+  <div class="wrap cover-inner">
+    <div class="cover-left">
+      <p class="eyebrow"><span class="dot"></span>国家级非物质文化遗产 · 2011 · 云南</p>
+      <h1 class="title">
+        <span>乌铜</span><span class="title-line2">走银</span>
+      </h1>
+      <p class="sub">一件器物的<em>完整生命史</em></p>
+      <p class="lead">
+        不做大而全的博物馆。我们把全部注意力，放在一块铜如何变成一件器物的二十个小时里——
+        以及那一段只有 <b>70℃</b> 的生死窗口。
+      </p>
+
+      <div class="window-card">
+        <div class="wc-head"><span>熔点窗口</span><span class="mono">ΔT ≈ 70℃</span></div>
+        <div class="wc-bar">
+          <span class="wc-tick" style="left:0%"><b>960.8</b><i>Ag</i></span>
+          <span class="wc-tick" style="left:100%"><b>1030</b><i>Cu·Ag 合金</i></span>
+          <span class="wc-zone"></span>
+        </div>
+        <p class="wc-note">银先熔，铜后熔。早一步，银不流；晚一步，铜先塌。</p>
+      </div>
+
+      <div class="cover-meta">
+        <div><b>03</b><span>展区动线</span></div>
+        <div><b>05</b><span>核心工序</span></div>
+        <div><b>04</b><span>代表器型</span></div>
+      </div>
+    </div>
+    <div class="cover-right">
+      <button class="enter-btn" id="enterBtn" type="button">
+        <span class="eb-txt">进入文物厅</span>
+        <span class="eb-line"></span>
+        <span class="eb-idx mono">HALL 01</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 壹 · 文物厅 ============ -->
+<section id="hall1" class="hall" data-index="1" aria-hidden="true">
+  <div class="wrap hall-grid">
+    <div class="panel">
+      <p class="idx"><b>壹</b><span>HALL 01 / 展品呈现</span></p>
+      <h2>少而准的<br>四件器型</h2>
+      <p class="body">
+        不铺满大厅。四件器物各自承担一种工艺极端：平面的水平走银、弧面的连续走银、
+        立体的对称錾刻、垂直的收口走银。看一件，就看完一种难度。
+      </p>
+      <div class="hint-row"><i></i>拖拽旋转 · 点击器表亮点，回溯它的工序</div>
+    </div>
+
+    <div class="drag-surface" id="dragSurface"></div>
+
+    <div class="artifact-card" id="artifactCard">
+      <div class="ac-top">
+        <span class="ac-idx mono" id="acIdx">01 / 04</span>
+        <span class="ac-line"></span>
+      </div>
+      <h3 id="acName">山水纹墨盒</h3>
+      <p class="ac-meta mono" id="acMeta">清末民初 · 长 8.6cm</p>
+      <p class="ac-desc" id="acDesc"></p>
+    </div>
+
+    <div class="thumb-strip" id="thumbStrip"></div>
+
+    <div class="hotspots" id="hotspots"></div>
+  </div>
+</section>
+
+<!-- ============ 贰 · 工坊厅 ============ -->
+<section id="hall2" class="hall" data-index="2" aria-hidden="true">
+  <div class="wrap hall-grid hall2-grid">
+    <div class="panel">
+      <p class="idx"><b>贰</b><span>HALL 02 / 工艺流程</span></p>
+      <h2>一块铜的<br>五次变身</h2>
+      <p class="body">
+        五道工序不做成五个视频按钮。同一块铜坯留在场景中央，你推进时间轴，
+        它就在你眼前依次变形——炼、锻、錾、走、捂。
+      </p>
+
+      <ol class="steplist" id="steplist"></ol>
+
+      <div class="stepinfo" id="stepinfo">
+        <p class="si-row"><span>温度</span><b id="siTemp">—</b></p>
+        <p class="si-row"><span>工具</span><b id="siTool">—</b></p>
+        <p class="si-row"><span>风险</span><b id="siRisk">—</b></p>
+      </div>
+    </div>
+
+    <!-- 温度仪表 -->
+    <aside class="gauge" id="gauge">
+      <div class="g-head">
+        <span>炉温</span>
+        <span class="g-flame" id="gFlame">◍</span>
+      </div>
+      <div class="g-read"><b id="gRead">940.0</b><i>℃</i></div>
+      <div class="g-scale" id="gScale">
+        <div class="g-window" id="gWindow"></div>
+        <div class="g-needle" id="gNeedle"></div>
+        <div class="g-marks">
+          <span style="--y:59.5%"><i></i><em>960.8</em></span>
+          <span style="--y:13.3%"><i></i><em>1030</em></span>
+        </div>
+      </div>
+      <div class="g-slider">
+        <input type="range" id="tempRange" min="900" max="1050" step="0.5" value="940">
+      </div>
+      <p class="g-note" id="gNote">走银阶段：把指针停在两条刻度之间</p>
+    </aside>
+
+    <!-- 时间轴 -->
+    <div class="timeline" id="timeline">
+      <button class="tl-play" id="playBtn" aria-label="播放">
+        <svg viewBox="0 0 24 24" width="14" height="14"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>
+      </button>
+      <div class="tl-main">
+        <div class="tl-track" id="tlTrack">
+          <div class="tl-fill" id="tlFill"></div>
+          <div class="tl-nodes" id="tlNodes"></div>
+          <div class="tl-head" id="tlHead"></div>
+        </div>
+        <div class="tl-labels" id="tlLabels"></div>
+      </div>
+      <button class="tl-assist" id="assistBtn">自动守温</button>
+      <button class="tl-reset" id="resetBtn">重置</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"><b>前功尽弃</b><span>铜坯过热塌陷，纹路已毁</span></div>
+</section>
+
+<!-- ============ 叁 · 传承厅 ============ -->
+<section id="hall3" class="hall" data-index="3" aria-hidden="true">
+  <div class="wrap hall3-wrap">
+    <div class="hall3-head">
+      <p class="idx"><b>叁</b><span>HALL 03 / 文化传承</span></p>
+      <h2>一面纹样墙</h2>
+      <p class="body narrow">
+        不堆年表。乌铜走银的纹样不是装饰，是一套语法：梅兰竹菊讲品格，麒麟吐书讲祈愿，
+        回纹云雷讲边界。点开任意一个母题——它在哪件器物上出现过，又由哪一刀开始。
+      </p>
+    </div>
+    <div class="pattern-wall" id="patternWall"></div>
+    <div class="pattern-detail" id="patternDetail">
+      <div class="pd-empty">选择一个母题</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 注 · 策展说明 ============ -->
+<section id="notes" class="hall notes" data-index="4" aria-hidden="true">
+  <div class="wrap">
+    <div class="notes-head">
+      <p class="idx"><b>注</b><span>CURATORIAL NOTES</span></p>
+      <h2>设计决策<br>如何对上评审点</h2>
+    </div>
+    <div class="notes-grid">
+      <article class="note">
+        <span class="n-key">展览布局</span>
+        <h4>提问 · 解答 · 回响</h4>
+        <p>三厅不是三个装饰性的房间。文物厅提出纹样疑问，工坊厅给出工艺解释，传承厅呈现纹样谱系并回指文物厅——动线本身就是论证结构。</p>
+      </article>
+      <article class="note">
+        <span class="n-key">展品呈现</span>
+        <h4>少，但每件都不可替代</h4>
+        <p>四件器型对应四种工艺极限，不做无差别陈列。器物表面的每个热点都指向具体工序，展品厅与工坊厅双向跳转。</p>
+      </article>
+      <article class="note">
+        <span class="n-key">交互体验</span>
+        <h4>一条可 scrub 的时间轴</h4>
+        <p>核心交互是可推进、可回退的工艺时间轴，加上走银环节的温度窗口风险反馈。交互服务于理解，而不是炫技。</p>
+      </article>
+      <article class="note">
+        <span class="n-key">文化传承</span>
+        <h4>70℃ 的不可替代性</h4>
+        <p>落脚点不在"历史悠久"，而在技艺的物理极限：70℃ 熔点窗口与手工錾刻的不可逆性，是机器复制无法替代的部分。</p>
+      </article>
+    </div>
+
+    <div class="notes-foot">
+      <div class="nf-col">
+        <h5>技术实现</h5>
+        <ul>
+          <li>Three.js · 程序化几何体，零外部模型依赖</li>
+          <li>PMREM 环境贴图主导金属反射，而非堆灯光</li>
+          <li>单条时间轴驱动：相机、材质、纹样、温度指针同步</li>
+          <li>纹样以 Canvas 逐段绘制，兼作 bump 与银线遮罩</li>
+        </ul>
+      </div>
+      <div class="nf-col">
+        <h5>一个易被忽略的合规项</h5>
+        <p>赛项要求：作品含地图且涉及国家当代疆域时，须注明来源与审图号。本方案因此<b>不设</b>云南地图，传承地以文字谱系与纹样网络呈现——不放地图，就不必冒险。</p>
+        <p class="nf-src mono">参考：云南省非物质文化遗产保护中心 / ynich.cn</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ 载入层 ============ -->
+<div class="loader" id="loader">
+  <div class="ld-inner">
+    <div class="ld-mark"><span></span><span></span></div>
+    <p class="ld-title">乌铜走银</p>
+    <p class="ld-sub" id="ldSub">正在升温 · 960.8℃ → 1030℃</p>
+    <div class="ld-bar"><i id="ldBar"></i></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
+<script>
+  if (!window.THREE) {
+    document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"><\/script>');
+  }
+</script>
+<script src="app.js"></script>
+</body>
+</html>
