@@ -1054,7 +1054,7 @@
   var ARTIFACTS = [
     {
       key: 'winepot', name: '祥龙献瑞酒壶', meta: '当代 · 重 590.6g · 2013「金凤凰」金奖',
-      build: buildWinepot, glb: 'ewer-dragon-lite.glb',
+      build: buildWinepot, glb: 'assets/ewer-dragon-lite.glb',
       desc: '扁圆壶身，九龙缠绕：壶颈、壶嘴、壶底各刻二龙，壶把一龙。黑底白纹，银线随笔势在弧面上流转；2013 年获「金凤凰」创新产品设计大赛金奖。',
       hot: [
         { i: 0, label: '九龙缠绕 · 走银', step: 3, t: '九龙走银', d: '壶身扁圆，银线沿弧面流转。九条龙分踞颈、嘴、底、把，接头必须藏在龙首与云纹里，一圈走完看不出断点。' },
