@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>乌铜走银 · 一件器物的完整生命史</title>
 <meta name="description" content="乌铜走银虚拟展览：以 70℃ 熔点窗口为技术戏剧核心，三厅动线串联文物、工坊与纹样谱系。">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=light4">
 </head>
 <body>
 
@@ -21,6 +21,14 @@
       <b>乌铜走银</b>
       <em>WUTONG ZOUYIN</em>
     </span>
+  </a>
+  <a href="museum.html" target="_blank" rel="noopener"
+     style="display:inline-flex;align-items:center;gap:9px;padding:9px 15px;
+            border:1px solid rgba(154,79,43,.35);border-radius:2px;
+            background:rgba(255,250,241,.78);color:var(--copper);
+            font-family:var(--mono);font-size:9px;letter-spacing:.22em;
+            text-decoration:none;white-space:nowrap;">
+    进入 3D 传习馆 <span style="font-size:11px;letter-spacing:0">↗</span>
   </a>
 </header>
 
@@ -92,28 +100,26 @@
   <div class="wrap hall-grid">
     <div class="panel">
       <p class="idx"><b>壹</b><span>HALL 01 / 展品呈现</span></p>
-      <h2>少而准的<br>四件器型</h2>
+      <h2>一件镇厅器<br>九龙缠绕</h2>
       <p class="body">
-        不铺满大厅。四件器物各自承担一种工艺极端：平面的水平走银、弧面的连续走银、
-        立体的对称錾刻、垂直的收口走银。看一件，就看完一种难度。
+        文物厅只留一件：祥龙献瑞酒壶。扁圆壶身，壶颈、壶嘴、壶底各刻二龙，壶把一龙，
+        合为九龙缠绕之势。重 590.6g，2013 年获「金凤凰」创新产品设计大赛金奖。
       </p>
       <div class="hint-row"><i></i>拖拽旋转 · 点击器表亮点，回溯它的工序</div>
+
+      <div class="artifact-card" id="artifactCard">
+        <div class="ac-top">
+          <span class="ac-idx mono" id="acIdx">01 / 01</span>
+          <span class="ac-line"></span>
+        </div>
+        <h3 id="acName">祥龙献瑞酒壶</h3>
+        <p class="ac-meta mono" id="acMeta">当代 · 重 590.6g · 2013「金凤凰」金奖</p>
+        <p class="ac-desc" id="acDesc"></p>
+      </div>
     </div>
 
     <div class="drag-surface" id="dragSurface"></div>
-
-    <div class="artifact-card" id="artifactCard">
-      <div class="ac-top">
-        <span class="ac-idx mono" id="acIdx">01 / 04</span>
-        <span class="ac-line"></span>
-      </div>
-      <h3 id="acName">山水纹墨盒</h3>
-      <p class="ac-meta mono" id="acMeta">清末民初 · 长 8.6cm</p>
-      <p class="ac-desc" id="acDesc"></p>
-    </div>
-
     <div class="thumb-strip" id="thumbStrip"></div>
-
     <div class="hotspots" id="hotspots"></div>
   </div>
 </section>
@@ -259,12 +265,13 @@
   </div>
 </div>
 
-<script src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
+<script src="three.min.js"></script>
 <script>
   if (!window.THREE) {
     document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"><\/script>');
   }
 </script>
-<script src="app.js"></script>
+<script src="GLTFLoader.js?v=light4"></script>
+<script src="app.js?v=light4"></script>
 </body>
 </html>

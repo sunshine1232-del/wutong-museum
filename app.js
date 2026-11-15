@@ -1053,39 +1053,13 @@
 
   var ARTIFACTS = [
     {
-      key: 'inkbox', name: '山水纹墨盒', meta: '当代 · 边长 8.5cm · 万字锦地', build: buildInkbox,
-      desc: '盖面以银线作山水，题「溪静风不过」，旁钤朱印；盒身满錾万字锦地。最细的银线不足半毫米——錾刀一滑，整块铜胎作废。',
+      key: 'winepot', name: '祥龙献瑞酒壶', meta: '当代 · 重 590.6g · 2013「金凤凰」金奖',
+      build: buildWinepot, glb: 'ewer-dragon-lite.glb',
+      desc: '扁圆壶身，九龙缠绕：壶颈、壶嘴、壶底各刻二龙，壶把一龙。黑底白纹，银线随笔势在弧面上流转；2013 年获「金凤凰」创新产品设计大赛金奖。',
       hot: [
-        { i: 0, label: '山水题款 · 錾刻', step: 2, t: '錾刻', d: '盖面山水与题款由数百条短錾线组成，山石用连续的“披麻”走线，深浅必须一致；一处失手，整盖作废。' },
-        { i: 1, label: '万字锦地 · 走银', step: 3, t: '锦地走银', d: '盒身一圈万字锦地由上百个回旋单元连续排布，银水沿细槽一次走完，接头必须藏在转折里。' },
-        { i: 2, label: '银边合口 · 锻制', step: 1, t: '合缝', d: '盖沿与盒口的亮银边先錾出细槽再填银抛光；盖盒公差靠手工锉配，偏 0.1mm 扣合就会翘边。' }
-      ]
-    },
-    {
-      key: 'winepot', name: '祥龙献瑞酒壶', meta: '当代 · 通高 23cm · 限量 19 把', build: buildWinepot,
-      desc: '团龙盘于双圈开光之中，长流高鋬皆作 S 形。以乌铜为胎錾刻龙纹，银块高温熔炼填入纹路，黑白相间、精美雅致——此壶仅发行 19 把。',
-      hot: [
-        { i: 0, label: '团龙开光 · 走银', step: 3, t: '团龙纹', d: '团龙盘于回纹开光之内，鳞片与鬃发全是细錾槽。弧面走银时银水会顺势下淌，须匀速转壶、分段升温填满。' },
-        { i: 1, label: 'S 形长流 · 锻制', step: 1, t: '长流', d: '长流与鋬皆整料锻出 S 形，壁厚不足 1mm；弧度差一点，出水就偏。' },
+        { i: 0, label: '九龙缠绕 · 走银', step: 3, t: '九龙走银', d: '壶身扁圆，银线沿弧面流转。九条龙分踞颈、嘴、底、把，接头必须藏在龙首与云纹里，一圈走完看不出断点。' },
+        { i: 1, label: 'S 形长流 · 锻制', step: 1, t: '长流', d: '长流整料锻出 S 形，壁厚不足 1mm；弧度差一点，出水就偏。' },
         { i: 2, label: '顶珠莲瓣 · 捂黑', step: 4, t: '捂黑', d: '壶盖回纹带与莲瓣顶饰錾后填银，顶珠为琥珀。捂黑时银件附件须拆下单独处理，避免温差留痕。' }
-      ]
-    },
-    {
-      key: 'censer', name: '松竹开光香炉', meta: '当代 · 高 11cm · 乌铜走金银', build: buildCenser,
-      desc: '狮首衔环，回纹锦地满工，开光内松竹以金入槽；穹顶云纹，顶珠丹红。同一件器物上，银白与鎏金各走各的火候。',
-      hot: [
-        { i: 0, label: '开光松竹 · 走金', step: 3, t: '走金', d: '开光内松、竹以金入槽——同一炉火，金比银更挑温度。这是乌铜走银的姊妹技艺「乌铜走金」。' },
-        { i: 1, label: '狮首衔环 · 锻制', step: 1, t: '兽首', d: '狮首双目、卷鬃、衔环皆锤揲成型后焊上炉身；焊口若氧化，捂黑后会留下一道灰线。' },
-        { i: 2, label: '回纹锦地 · 錾刻', step: 2, t: '锦地', d: '炉身满工回纹锦地作底，开光嵌于其间。锦地每个回旋都要等距，手一抖整片就花。' }
-      ]
-    },
-    {
-      key: 'brushpot', name: '四君子笔筒', meta: '民国 · 高 12.8cm', build: buildBrushpot,
-      desc: '梅兰竹菊分四面，银线沿筒壁垂直走。收口处最易崩裂——铜壁被錾得太薄，银水一烫就塌。',
-      hot: [
-        { i: 0, label: '竹枝 · 錾刻', step: 2, t: '垂直走线', d: '垂直纹样看似简单，实则全程手腕悬空，稍有抖动，银线就歪。' },
-        { i: 1, label: '筒壁 · 走银', step: 3, t: '曲面填银', d: '筒身是等径曲面，银水靠毛细作用上行，温度低了就停在半路。' },
-        { i: 2, label: '底足 · 捂黑', step: 4, t: '捂黑', d: '捂黑要整器一起做，手握的位置不同，氧化程度就会有细微差别。' }
       ]
     }
   ];
@@ -1122,6 +1096,37 @@
     artPivot.add(holder);
     artifactNodes.push({ holder: holder, anchors: anchors, data: data });
   });
+
+
+  /* ---------- 文物厅主展品：祥龙献瑞酒壶实体模型 ----------
+     程序化酒壶先占位；GLB 载入成功后替换，失败则保留程序化兜底。 */
+  if (ARTIFACTS[0].glb && T.GLTFLoader) {
+    new T.GLTFLoader().load(ARTIFACTS[0].glb, function (gltf) {
+      var holder = artifactNodes[0].holder;
+      while (holder.children.length) holder.remove(holder.children[0]);
+      var g = gltf.scene;
+      var box = new T.Box3().setFromObject(g);
+      var size = box.getSize(new T.Vector3());
+      var s = 1.55 / Math.max(size.x, size.y, size.z);
+      var ctr = box.getCenter(new T.Vector3());
+      g.scale.setScalar(s);
+      g.position.set(-ctr.x * s, -box.min.y * s, -ctr.z * s);
+      g.traverse(function (o) {
+        if (o.isMesh && o.material) {
+          o.material.envMapIntensity = 1.35;
+          o.material.needsUpdate = true;
+        }
+      });
+      holder.add(g);
+      artifactNodes[0].anchors = [
+        new T.Vector3(0, 1.28, 0.12),
+        new T.Vector3(0.38, 0.68, 0.18),
+        new T.Vector3(-0.28, 0.34, 0.18)
+      ];
+    }, undefined, function (err) {
+      console.warn('[winepot] GLB 载入失败，保留程序化模型', err);
+    });
+  }
 
   /* 器物接触阴影 */
   function shadowTexture() {
@@ -1637,7 +1642,7 @@
     $('#acName').textContent = d.name;
     $('#acMeta').textContent = d.meta;
     $('#acDesc').textContent = d.desc;
-    $('#acIdx').textContent = '0' + (i + 1) + ' / 04';
+    $('#acIdx').textContent = '0' + (i + 1) + ' / 0' + ARTIFACTS.length;
 
     rebuildHotspots(i);
     hsCard.classList.remove('on');
@@ -2042,8 +2047,8 @@
 
   function drawMotif(ctx, key, S) {
     ctx.clearRect(0, 0, S, S);
-    ctx.strokeStyle = '#e9dfd2';
-    ctx.lineWidth = S * 0.014;
+    ctx.strokeStyle = '#5a321c';
+    ctx.lineWidth = S * 0.018;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     var c = S / 2;
