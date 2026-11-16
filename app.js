@@ -1054,7 +1054,7 @@
   var ARTIFACTS = [
     {
       key: 'winepot', name: '祥龙献瑞酒壶', meta: '当代 · 重 590.6g · 2013「金凤凰」金奖',
-      build: buildWinepot, glb: 'assets/ewer-dragon-lite.glb',
+      build: buildWinepot, glb: 'ewer-dragon-lite.glb',
       desc: '扁圆壶身，九龙缠绕：壶颈、壶嘴、壶底各刻二龙，壶把一龙。黑底白纹，银线随笔势在弧面上流转；2013 年获「金凤凰」创新产品设计大赛金奖。',
       hot: [
         { i: 0, label: '九龙缠绕 · 走银', step: 3, t: '九龙走银', d: '壶身扁圆，银线沿弧面流转。九条龙分踞颈、嘴、底、把，接头必须藏在龙首与云纹里，一圈走完看不出断点。' },
@@ -1099,34 +1099,46 @@
 
 
   /* ---------- 文物厅主展品：祥龙献瑞酒壶实体模型 ----------
-     程序化酒壶先占位；GLB 载入成功后替换，失败则保留程序化兜底。 */
-  if (ARTIFACTS[0].glb && T.GLTFLoader) {
-    new T.GLTFLoader().load(ARTIFACTS[0].glb, function (gltf) {
-      var holder = artifactNodes[0].holder;
-      while (holder.children.length) holder.remove(holder.children[0]);
-      var g = gltf.scene;
-      var box = new T.Box3().setFromObject(g);
-      var size = box.getSize(new T.Vector3());
-      var s = 1.55 / Math.max(size.x, size.y, size.z);
-      var ctr = box.getCenter(new T.Vector3());
-      g.scale.setScalar(s);
-      g.position.set(-ctr.x * s, -box.min.y * s, -ctr.z * s);
-      g.traverse(function (o) {
-        if (o.isMesh && o.material) {
-          o.material.envMapIntensity = 1.35;
-          o.material.needsUpdate = true;
-        }
-      });
-      holder.add(g);
-      artifactNodes[0].anchors = [
-        new T.Vector3(0, 1.28, 0.12),
-        new T.Vector3(0.38, 0.68, 0.18),
-        new T.Vector3(-0.28, 0.34, 0.18)
-      ];
-    }, undefined, function (err) {
-      console.warn('[winepot] GLB 载入失败，保留程序化模型', err);
+     GitHub Pages 直连大文件容易慢/断；优先走 jsDelivr CDN，失败再回退本地。 */
+  var EWER_SOURCES = [
+    'https://cdn.jsdelivr.net/gh/sunshine1232-del/wutong-museum@main/ewer-dragon-lite.glb',
+    'ewer-dragon-lite.glb'
+  ];
+  function fitEwer(gltf) {
+    var holder = artifactNodes[0].holder;
+    while (holder.children.length) holder.remove(holder.children[0]);
+    var g = gltf.scene;
+    var box = new T.Box3().setFromObject(g);
+    var size = box.getSize(new T.Vector3());
+    var s = 1.55 / Math.max(size.x, size.y, size.z);
+    var ctr = box.getCenter(new T.Vector3());
+    g.scale.setScalar(s);
+    g.position.set(-ctr.x * s, -box.min.y * s, -ctr.z * s);
+    g.traverse(function (o) {
+      if (o.isMesh && o.material) {
+        o.material.envMapIntensity = 1.35;
+        o.material.needsUpdate = true;
+      }
+    });
+    holder.add(g);
+    artifactNodes[0].anchors = [
+      new T.Vector3(0, 1.28, 0.12),
+      new T.Vector3(0.38, 0.68, 0.18),
+      new T.Vector3(-0.28, 0.34, 0.18)
+    ];
+    console.log('[winepot] 实体酒壶已载入');
+  }
+  function loadEwer(idx) {
+    if (!T.GLTFLoader || idx >= EWER_SOURCES.length) {
+      console.warn('[winepot] GLB 载入失败，保留程序化模型');
+      return;
+    }
+    new T.GLTFLoader().load(EWER_SOURCES[idx], fitEwer, undefined, function (err) {
+      console.warn('[winepot] 源失败，重试下一个：', EWER_SOURCES[idx], err);
+      loadEwer(idx + 1);
     });
   }
+  loadEwer(0);
 
   /* 器物接触阴影 */
   function shadowTexture() {
