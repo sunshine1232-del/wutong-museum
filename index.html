@@ -22,6 +22,11 @@
       <em>WUTONG ZOUYIN</em>
     </span>
   </a>
+  <div style="display:flex;align-items:center;gap:8px">
+  <a href="video.html" style="display:inline-flex;align-items:center;gap:7px;padding:9px 13px;
+     border:1px solid rgba(154,79,43,.28);border-radius:2px;background:rgba(255,250,241,.6);
+     color:var(--copper);font-family:var(--mono);font-size:9px;letter-spacing:.18em;
+     text-decoration:none;white-space:nowrap;">观看影片</a>
   <a href="museum.html" target="_blank" rel="noopener"
      style="display:inline-flex;align-items:center;gap:9px;padding:9px 15px;
             border:1px solid rgba(154,79,43,.35);border-radius:2px;
@@ -30,6 +35,7 @@
             text-decoration:none;white-space:nowrap;">
     进入 3D 传习馆 <span style="font-size:11px;letter-spacing:0">↗</span>
   </a>
+  </div>
 </header>
 
 <!-- ============ 右上 · 专栏导航 ============ -->
@@ -46,9 +52,6 @@
   </a>
   <a class="col-item" href="#hall3" data-hall="3">
     <b>叁</b><span>传承厅</span><i>03</i>
-  </a>
-  <a class="col-item" href="#notes" data-hall="4">
-    <b>注</b><span>策展说明</span><i>04</i>
   </a>
   <p class="col-foot"><b>← →</b> 切换展厅</p>
 </nav>
@@ -204,54 +207,6 @@
   </div>
 </section>
 
-<!-- ============ 注 · 策展说明 ============ -->
-<section id="notes" class="hall notes" data-index="4" aria-hidden="true">
-  <div class="wrap">
-    <div class="notes-head">
-      <p class="idx"><b>注</b><span>CURATORIAL NOTES</span></p>
-      <h2>设计决策<br>如何对上评审点</h2>
-    </div>
-    <div class="notes-grid">
-      <article class="note">
-        <span class="n-key">展览布局</span>
-        <h4>提问 · 解答 · 回响</h4>
-        <p>三厅不是三个装饰性的房间。文物厅提出纹样疑问，工坊厅给出工艺解释，传承厅呈现纹样谱系并回指文物厅——动线本身就是论证结构。</p>
-      </article>
-      <article class="note">
-        <span class="n-key">展品呈现</span>
-        <h4>少，但每件都不可替代</h4>
-        <p>四件器型对应四种工艺极限，不做无差别陈列。器物表面的每个热点都指向具体工序，展品厅与工坊厅双向跳转。</p>
-      </article>
-      <article class="note">
-        <span class="n-key">交互体验</span>
-        <h4>一条可 scrub 的时间轴</h4>
-        <p>核心交互是可推进、可回退的工艺时间轴，加上走银环节的温度窗口风险反馈。交互服务于理解，而不是炫技。</p>
-      </article>
-      <article class="note">
-        <span class="n-key">文化传承</span>
-        <h4>70℃ 的不可替代性</h4>
-        <p>落脚点不在"历史悠久"，而在技艺的物理极限：70℃ 熔点窗口与手工錾刻的不可逆性，是机器复制无法替代的部分。</p>
-      </article>
-    </div>
-
-    <div class="notes-foot">
-      <div class="nf-col">
-        <h5>技术实现</h5>
-        <ul>
-          <li>Three.js · 程序化几何体，零外部模型依赖</li>
-          <li>PMREM 环境贴图主导金属反射，而非堆灯光</li>
-          <li>单条时间轴驱动：相机、材质、纹样、温度指针同步</li>
-          <li>纹样以 Canvas 逐段绘制，兼作 bump 与银线遮罩</li>
-        </ul>
-      </div>
-      <div class="nf-col">
-        <h5>一个易被忽略的合规项</h5>
-        <p>赛项要求：作品含地图且涉及国家当代疆域时，须注明来源与审图号。本方案因此<b>不设</b>云南地图，传承地以文字谱系与纹样网络呈现——不放地图，就不必冒险。</p>
-        <p class="nf-src mono">参考：云南省非物质文化遗产保护中心 / ynich.cn</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 </main>
 
@@ -6074,6 +6029,7 @@
   }
 
   function goHall(i) {
+    if (i < 0 || i >= SECTIONS.length) return;
     if (i === state.hall) return;
     state.hall = i;
 

@@ -1,0 +1,12 @@
+﻿1. 先在 GitHub 仓库 Releases 里创建 Release：
+   - Tag: v1
+   - 附件：corridor-screen.mp4（原视频，125MB；Release 支持 2GB，不受仓库 100MB 限制）
+   - Publish release
+2. 再把本文件夹里 24 个文件全部上传到仓库根目录，覆盖 index.html 和 museum.html。
+3. 强刷：https://sunshine1232-del.github.io/wutong-museum/?v=light5
+
+说明：
+- index.html 已内联 three.js / GLTFLoader / app.js，不再请求这三个文件。
+- museum.html 是分片装载器，读取 hall.part00~19 拼回原 3D 展厅。
+- 3D 门厅电子屏会自动播放 Release 里的视频；主站右上角“观看影片”也可直接看。
+- 每个文件都小于 1MB，不会再被网络截断。

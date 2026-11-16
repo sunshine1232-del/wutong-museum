@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>永不消逝的银纹 | 乌铜走银 · 数字传习馆</title>
+<style>
+  :root{ --paper:#f3e8d6; --ink:#2b2117; --muted:#8a7860; --copper:#9a4f2b; --line:rgba(60,45,30,.18); }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    background-image:radial-gradient(900px 500px at 80% 0%, rgba(154,79,43,.10), transparent 60%);
+    min-height:100vh}
+  .wrap{max-width:1120px;margin:0 auto;padding:clamp(22px,4vw,48px)}
+  header{display:flex;justify-content:space-between;align-items:center;gap:16px;
+    border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:clamp(22px,4vw,40px)}
+  .brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit}
+  .seal{width:34px;height:34px;display:grid;place-items:center;background:#8d2f23;color:#fff8ec;
+    font-family:"Songti SC",serif;font-size:17px}
+  b{font-family:"Songti SC",serif;font-size:15px;letter-spacing:.2em;font-weight:500}
+  small{display:block;font:8px/1.5 Consolas,monospace;letter-spacing:.18em;color:var(--muted)}
+  header a.back{font:11px/1 "PingFang SC",sans-serif;letter-spacing:.1em;color:var(--copper);text-decoration:none}
+  h1{font-family:"Songti SC",serif;font-weight:500;font-size:clamp(34px,5.4vw,64px);
+    letter-spacing:.1em;margin:0 0 10px}
+  .sub{font:10px/1.6 Consolas,monospace;letter-spacing:.2em;color:var(--copper);margin-bottom:26px}
+  .player{border:1px solid var(--line);background:#0b0907;box-shadow:0 24px 60px rgba(60,45,30,.18)}
+  video{display:block;width:100%;max-height:74vh;background:#0b0907}
+  .note{margin-top:18px;font-size:12px;line-height:1.9;color:var(--muted);max-width:70ch}
+  .note b{color:var(--copper);font-family:inherit;font-size:inherit;letter-spacing:0}
+  .fallback{margin-top:12px;font-size:11px;color:#8d2f23;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="index.html">
+      <span class="seal" aria-hidden="true">烏</span>
+      <span><b>乌铜走银</b><small>WUTONG ZOUYIN · FILM</small></span>
+    </a>
+    <a class="back" href="index.html">← 返回主站</a>
+  </header>
+
+  <h1>永不消逝的银纹</h1>
+  <div class="sub">云南非遗 · 乌铜走银 / 云南省地方志编纂委员会办公室 出品</div>
+
+  <div class="player">
+    <video id="film" controls playsinline preload="metadata"
+      src="https://github.com/sunshine1232-del/wutong-museum/releases/download/v1/corridor-screen.mp4">
+      你的浏览器不支持视频播放。
+    </video>
+  </div>
+
+  <p class="note"><b>若视频无法播放：</b>请先在仓库 <b>Releases</b> 里创建 tag 为 <b>v1</b> 的 Release，并上传附件 <b>corridor-screen.mp4</b>。上传后本页与 3D 门厅电子屏会同时生效。</p>
+  <p class="fallback" id="err"></p>
+</div>
+<script>
+  (function(){
+    var v = document.getElementById('film');
+    v.addEventListener('error', function(){
+      document.getElementById('err').textContent =
+        '视频加载失败：请确认 Release（tag v1）里已上传 corridor-screen.mp4。';
+    });
+  })();
+</script>
+</body>
+</html>
