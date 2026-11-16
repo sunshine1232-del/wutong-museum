@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wutong Museum</title>
+<title>Wutong Hall</title>
 <style>
-  html,body{height:100%;margin:0;background:#f3e8d6;color:#2b2117;font-family:"Segoe UI","Microsoft YaHei",sans-serif}
+  html,body{height:100%;margin:0;background:#f3e8d6;color:#2b2117;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
   #load{position:fixed;inset:0;z-index:2;display:grid;place-items:center;background:#f3e8d6;text-align:center}
-  #load h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,46px);letter-spacing:.28em;margin:0 0 10px;text-indent:.28em}
+  #load h1{font-family:Georgia,"Songti SC",serif;font-size:clamp(28px,4vw,46px);letter-spacing:.28em;margin:0 0 10px;text-indent:.28em;font-weight:500}
   #load p{font-size:11px;letter-spacing:.14em;color:#8a7860;margin:0 0 28px}
   #bar{width:min(420px,72vw);height:2px;background:rgba(60,45,30,.16);margin:0 auto;overflow:hidden}
   #bar i{display:block;height:100%;width:0;background:#9a4f2b;transition:width .2s}
   #pct{font:10px/1.6 Consolas,monospace;letter-spacing:.12em;color:#8a7860;margin-top:10px}
-  #err{display:none;max-width:520px;padding:0 20px;font-size:12px;line-height:1.9;color:#8d2f23}
+  #err{display:none;max-width:560px;padding:0 20px;font-size:12px;line-height:1.9;color:#8d2f23}
 </style>
 </head>
 <body>
 <div id="load">
   <div>
-    <h1>WUTONG HALL</h1>
-    <p>Loading the 3D exhibition in 20 parts</p>
+    <h1 id="ttl"></h1>
+    <p id="sub"></p>
     <div id="bar"><i></i></div>
     <div id="pct">0%</div>
     <div id="err"></div>
@@ -27,32 +27,63 @@
 </div>
 <script>
 (function(){
-  var N = 20;
-  var VIDEO_URL = 'https://github.com/sunshine1232-del/wutong-museum/releases/download/v1/corridor-screen.mp4';
+  var T = {
+    title: '\u4e4c\u94dc\u8d70\u94f6 \u00b7 \u865a\u62df\u535a\u7269\u9986',
+    hall: '\u542f\u5c01\u5c55\u5385',
+    loading: '\u6b63\u5728\u5206\u7247\u88c5\u8f7d 16.9MB \u4e09\u7ef4\u5c55\u5385',
+    fail: '\u5c55\u5385\u5206\u7247\u52a0\u8f7d\u5931\u8d25\uff1a'
+  };
+  document.title = T.title;
+  document.getElementById('ttl').textContent = T.hall;
+  document.getElementById('sub').textContent = T.loading;
+
+  var N = 8;
+  var VIDEO_URL = 'https://sunshine1232-del.github.io/wutong-museum/corridor-screen-720.mp4';
+  var CDN = 'https://cdn.jsdelivr.net/gh/sunshine1232-del/wutong-museum@main/';
   var bar = document.querySelector('#bar i');
   var pct = document.getElementById('pct');
   var err = document.getElementById('err');
   var done = 0;
   var chunks = new Array(N);
+
   function fail(msg){ err.style.display='block'; err.textContent = msg; }
+  function partName(i){ return 'fast.part' + String(i).padStart(2,'0'); }
   function fetchOne(i){
-    return fetch('hall.part' + String(i).padStart(2,'0'), {cache:'no-store'})
-      .then(function(r){ if(!r.ok) throw new Error('part '+i+' HTTP '+r.status); return r.arrayBuffer(); })
-      .then(function(b){ chunks[i]=b; done++; var p=Math.round(done/N*100); bar.style.width=p+'%'; pct.textContent=p+'%'; });
+    var name = partName(i);
+    return fetch(CDN + name + '?v=5', {cache:'force-cache'})
+      .then(function(r){ if(!r.ok) throw new Error('cdn'); return r.arrayBuffer(); })
+      .catch(function(){
+        return fetch(name, {cache:'force-cache'}).then(function(r){
+          if(!r.ok) throw new Error('part ' + i + ' HTTP ' + r.status);
+          return r.arrayBuffer();
+        });
+      })
+      .then(function(b){
+        chunks[i] = b; done++;
+        var p = Math.round(done / N * 100);
+        bar.style.width = p + '%'; pct.textContent = p + '%';
+      });
   }
+
   var queue = [];
-  for (var i=0;i<N;i++) queue.push(i);
-  function next(){
+  for (var i = 0; i < N; i++) queue.push(i);
+  function worker(){
     if (!queue.length) return Promise.resolve();
     var i = queue.shift();
-    return fetchOne(i).then(next);
+    return fetchOne(i).then(worker);
   }
-  Promise.all([next(),next(),next(),next()]).then(function(){
+  var workers = [];
+  for (var w = 0; w < 8; w++) workers.push(worker());
+
+  function assemble(){
     var total = chunks.reduce(function(a,b){ return a + b.byteLength; }, 0);
     var buf = new Uint8Array(total);
     var off = 0;
     chunks.forEach(function(c){ buf.set(new Uint8Array(c), off); off += c.byteLength; });
     var html = new TextDecoder('utf-8').decode(buf);
+    if (html.indexOf('id="hudTitle"') < 0 && html.indexOf('__HALL') < 0) {
+      throw new Error('assembly check failed');
+    }
     if (VIDEO_URL) {
       html = html.replace("overlay.preload = 'auto';", "overlay.preload = 'metadata';");
       html = html.replace(
@@ -63,8 +94,10 @@
     document.open();
     document.write(html);
     document.close();
-  }).catch(function(e){
-    fail('Failed to load the 3D exhibition: ' + e.message + '. Please hard-refresh and try again.');
+  }
+
+  Promise.all(workers).then(assemble).catch(function(e){
+    fail(T.fail + e.message + '\u3002\u8bf7\u5f3a\u5237\u9875\u9762\u91cd\u8bd5\u3002');
   });
 })();
 </script>

@@ -1,0 +1,10 @@
+﻿完整上传清单（13 个文件，全部放仓库根目录）：
+index.html                 2D 主站（亮色、无视频入口、4 栏目）
+style.css                  亮色样式
+ewer-dragon-lite.glb       酒壶实体模型（2D 与 3D 共用）
+museum.html                3D 分片装载器（8 片）
+fast.part00~07             3D 展厅分片，共 7.1MB
+corridor-screen-720.mp4    3D 电子屏视频，720p / 6.4MB
+
+不需要：video.html、three.min.js、GLTFLoader.js、app.js、hall.part00~19、125MB 原视频。
+旧的可以删掉，只保留以上 13 个文件即可。
