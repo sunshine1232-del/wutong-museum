@@ -1,47 +1,43 @@
-﻿<!DOCTYPE html>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>涔岄摐璧伴摱 路 铏氭嫙鍗氱墿棣?/title>
+<title>Wutong Museum</title>
 <style>
-  html,body{height:100%;margin:0;background:#f3e8d6;color:#2b2117;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+  html,body{height:100%;margin:0;background:#f3e8d6;color:#2b2117;font-family:"Segoe UI","Microsoft YaHei",sans-serif}
   #load{position:fixed;inset:0;z-index:2;display:grid;place-items:center;background:#f3e8d6;text-align:center}
-  #load h1{font-family:"Songti SC",serif;font-size:clamp(28px,4vw,46px);letter-spacing:.28em;margin:0 0 10px;text-indent:.28em}
+  #load h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,46px);letter-spacing:.28em;margin:0 0 10px;text-indent:.28em}
   #load p{font-size:11px;letter-spacing:.14em;color:#8a7860;margin:0 0 28px}
   #bar{width:min(420px,72vw);height:2px;background:rgba(60,45,30,.16);margin:0 auto;overflow:hidden}
   #bar i{display:block;height:100%;width:0;background:#9a4f2b;transition:width .2s}
   #pct{font:10px/1.6 Consolas,monospace;letter-spacing:.12em;color:#8a7860;margin-top:10px}
   #err{display:none;max-width:520px;padding:0 20px;font-size:12px;line-height:1.9;color:#8d2f23}
-  iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#f3e8d6;z-index:3;display:none}
 </style>
 </head>
 <body>
 <div id="load">
   <div>
-    <h1>鍚皝灞曞巺</h1>
-    <p>姝ｅ湪鍒嗙墖瑁呰浇 16.9MB 涓夌淮灞曞巺</p>
+    <h1>WUTONG HALL</h1>
+    <p>Loading the 3D exhibition in 20 parts</p>
     <div id="bar"><i></i></div>
     <div id="pct">0%</div>
     <div id="err"></div>
   </div>
 </div>
-<iframe id="hall" title="涔岄摐璧伴摱铏氭嫙鍗氱墿棣嗕笁缁村睍鍘? allow="fullscreen; autoplay"></iframe>
 <script>
 (function(){
   var N = 20;
-  /* GitHub Release 閲岀殑鍘熻棰戯紱鍏堝缓 Release锛坱ag v1锛岄檮浠跺悕 corridor-screen.mp4锛?*/
   var VIDEO_URL = 'https://github.com/sunshine1232-del/wutong-museum/releases/download/v1/corridor-screen.mp4';
   var bar = document.querySelector('#bar i');
-  var pct = document.querySelector('#pct');
+  var pct = document.getElementById('pct');
   var err = document.getElementById('err');
-  var iframe = document.getElementById('hall');
   var done = 0;
   var chunks = new Array(N);
   function fail(msg){ err.style.display='block'; err.textContent = msg; }
   function fetchOne(i){
     return fetch('hall.part' + String(i).padStart(2,'0'), {cache:'no-store'})
-      .then(function(r){ if(!r.ok) throw new Error('part '+i+' '+r.status); return r.arrayBuffer(); })
+      .then(function(r){ if(!r.ok) throw new Error('part '+i+' HTTP '+r.status); return r.arrayBuffer(); })
       .then(function(b){ chunks[i]=b; done++; var p=Math.round(done/N*100); bar.style.width=p+'%'; pct.textContent=p+'%'; });
   }
   var queue = [];
@@ -64,15 +60,13 @@
         "const videoURL = " + JSON.stringify(VIDEO_URL) + ";"
       );
     }
-    var blob = new Blob([html], {type:'text/html'});
-    iframe.src = URL.createObjectURL(blob);
-    iframe.style.display='block';
-    document.getElementById('load').style.display='none';
+    document.open();
+    document.write(html);
+    document.close();
   }).catch(function(e){
-    fail('灞曞巺鍒嗙墖鍔犺浇澶辫触锛? + e.message + '銆傝寮哄埛椤甸潰閲嶈瘯銆?);
+    fail('Failed to load the 3D exhibition: ' + e.message + '. Please hard-refresh and try again.');
   });
 })();
 </script>
 </body>
 </html>
-
